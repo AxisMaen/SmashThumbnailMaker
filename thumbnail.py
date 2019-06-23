@@ -4,20 +4,34 @@
 
 from gimpfu import *
 
-def do_stuff(img, char1, char2) :
+def do_stuff(img, player1, char1, player2, char2, txtColor, font) :
     #gimp.progress_init("Doing stuff to " + layer.name + "...")
 
     # Set up an undo group, so the operation will be undone in one step.
     pdb.gimp_undo_push_group_start(img)
-	
-	#make all layers invisible to start
+    
+
+    #make all chars invisible to start
     for layer in gimp.image_list()[0].layers:
-        layer.opacity = 0.0
+        if(layer.name != "BG"):
+            layer.opacity = 0.0
 		
-	#if it is the char we want, make it visible
+	#make the chars we want visible
     char1.opacity = 100.0
     char2.opacity = 100.0
 	
+	# Set the text color
+    gimp.set_foreground(txtColor)
+    player1Layer = pdb.gimp_text_fontname(img, None, 25, 25, player1, 10, True, 80, POINTS, font)
+    
+    #"center align" player 1 text
+    player1Layer.translate(280-player1Layer.width/2, 0)
+    
+    player2Layer = pdb.gimp_text_fontname(img, None, 25, 25, player2, 10, True, 80, POINTS, font)
+    player2Layer.translate(940-player2Layer.width/2, 0)
+    
+    #p2 center = 980
+    
     # Close the undo group.
     pdb.gimp_undo_push_group_end(img)
 
@@ -32,8 +46,12 @@ register(
     "*",      # Alternately use RGB, RGB*, GRAY*, INDEXED etc.
     [	
 		(PF_IMAGE, "img", "Input image", None),
+		(PF_STRING, "word", "Player 1", "Mango"),
         (PF_LAYER, "char1", "Character 1 Layer", None),
-		(PF_LAYER, "char2", "Character 2 Layer", None)
+        (PF_STRING, "word", "Player 2", "Armada"),
+		(PF_LAYER, "char2", "Character 2 Layer", None),
+        (PF_COLOR, "txtColor", "Text color", (1.0, 1.0, 1.0)),
+        (PF_FONT, "font", "Font face", "BatmanForeverAlternate")
     ],
     [],
     do_stuff, menu="<Image>/Filters/Enhance")
