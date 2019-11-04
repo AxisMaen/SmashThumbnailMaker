@@ -15,7 +15,8 @@ def do_stuff(img, eventNum, roundName, player1, char1, player2, char2, txtColor,
     for layer in gimp.image_list()[0].layers:
         if(layer.name != "BG" and layer.name != "Top Dark"
            and layer.name != "Bot Dark" and layer.name != "Laser BG"
-           and layer.name != "Logo" and layer.name != "VS"):
+           and layer.name != "Logo" and layer.name != "VS" 
+		   and layer.name != "Event Logo"):
             layer.visible = False
 		
 	#make the chars we want visible
