@@ -25,13 +25,44 @@ def do_stuff(img, eventNum, roundName, player1, char1, player2, char2, txtColor,
 	
 	# Set the text color
     gimp.set_foreground(txtColor)
-    player1Layer = pdb.gimp_text_fontname(img, None, 25, 25, player1, 10, True, 90, POINTS, font)
+	
+	#set player 1 text size
+    fontSize = 90 #default size
+    vertOffset = 25
+    if(len(player1) > 6):
+        fontSize = 80
+        vertOffset = 30
+    if(len(player1) > 8):
+        fontSize = 75
+        vertOffset = 30
+	
+	
+    player1Layer = pdb.gimp_text_fontname(img, None, 0, 0, player1, 10, True, fontSize, PIXELS, font)
+    player1Layer.translate(300-player1Layer.width/2, vertOffset)
     
-    #"center align" player 1 text
-    player1Layer.translate(280-player1Layer.width/2, 0)
+    if(len(player1) > 8):
+        player1Layer.translate(player1Layer.width/15, 0)
     
-    player2Layer = pdb.gimp_text_fontname(img, None, 25, 25, player2, 10, True, 90, POINTS, font)
-    player2Layer.translate(970-player2Layer.width/2, 0)
+    
+    
+    
+	#set player 2 text size
+    fontSize = 90 #default size
+    vertOffset = 25
+    if(len(player2) > 6):
+        fontSize = 80
+        vertOffset = 30
+    if(len(player2) > 8):
+        fontSize = 75
+        vertOffset = 30
+        
+	
+    player2Layer = pdb.gimp_text_fontname(img, None, 0, 0, player2, 10, True, fontSize, PIXELS, font)
+    player2Layer.translate(970-player2Layer.width/2, vertOffset)
+    
+    #some extra shifting if long tag
+    if(len(player2) > 8):
+        player2Layer.translate(-player2Layer.width/15, 0)
     #p2 center = 970
     
     eventNumLayer = pdb.gimp_text_fontname(img, None, 10, 630, eventNum, 10, True, 70, POINTS, font)
