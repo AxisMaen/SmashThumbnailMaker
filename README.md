@@ -1,6 +1,6 @@
 # Melee Thumbnail Maker
 
-This is a Python plugin for Gimp that allows easy, customizable creation of Melee thumbnails.
+This is a Python plugin for Gimp that allows for easy, customizable creation of Melee thumbnails.
 
 ## Installation
 
